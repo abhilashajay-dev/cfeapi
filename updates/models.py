@@ -12,7 +12,7 @@ class UpdateQuerySet(models.QuerySet):
 	# 	return serialize('json', qs, fields=('user', 'content', 'image'))
 
 	def serialize(self): # this is for making output as a list of json ---> making it cleaner than serialized data
-		list_values = list(self.values('user','content','image'))
+		list_values = list(self.values('id','user','content','image'))
 		return json.dumps(list_values)
 	
 
@@ -45,6 +45,7 @@ class Update(models.Model):
 			image = ""
 		
 		data = {
+			'id':self.id,
 			'user':self.user.id,
 			'content':self.content,
 			'image':image

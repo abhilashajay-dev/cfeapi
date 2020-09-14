@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from updates.views import(  json_example_view,
  							JSONCBV,
   							JSONCBV2,
@@ -24,9 +24,10 @@ from updates.views import(  json_example_view,
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('json/example', json_example_view),
-    path('json/cbv', JSONCBV.as_view()),
-    path('json/cbv2', JSONCBV2.as_view()),
-    path('json/sdv', SerializedDetailView.as_view()),
-    path('json/slv', SerializedListView.as_view()),
+    path('json/example/', json_example_view),
+    path('json/cbv/', JSONCBV.as_view()),
+    path('json/cbv2/', JSONCBV2.as_view()),
+    path('json/sdv/', SerializedDetailView.as_view()),
+    path('json/slv/', SerializedListView.as_view()),
+    path('api/updates/', include('updates.api.urls')),
 ]
