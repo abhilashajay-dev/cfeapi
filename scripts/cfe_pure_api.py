@@ -22,15 +22,15 @@ def get_list():
 def create_update():
 	new_data= {
 	'user':1,
-	'content':"new data"
+	'content':""
 	}
 
-	r = requests.delete(BASE_URL + ENDPOINT, data=new_data)
+	r = requests.post(BASE_URL + ENDPOINT, data=new_data)
 	print(r.headers)
 	if r.status_code == requests.codes.ok : 
 		print(r.json())
 		return r.json()
 	return r.text    
     	
-print(get_list())
-# print(create_update())
+# print(get_list())
+print(create_update())

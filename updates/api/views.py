@@ -5,6 +5,7 @@ from django.views.generic import View
 from django.http import HttpResponse
 from .mixins import CSRFExemptMixin
 from cfeapi.mixins import HttpResponseMixin
+from updates.forms import UpdateModelForm
 
 # A single end point for creating ,retrieving, updating and deleting (1)UpdateModel
 class UpdateModelDetailAPIView(HttpResponseMixin, CSRFExemptMixin, View):  # retrive , update, delete
@@ -43,7 +44,17 @@ class UpdateModelListAPIView(HttpResponseMixin, CSRFExemptMixin, View):  # list 
         return self.render_to_response(json_data)
 
     def post(self, request, *args, **kwargs):
+        form = UpdateModelForm(request.POST or None)
+        if form.is_valid():
+            obj = form.save(commit=True)
+            obj_data = obj.serialize()
+            return self.render_to_response(obj_data, status=201)
+        if form.errors:
+            data = json.dumps(form.errors)
+            return self.render_to_response(data , status=400)     
+
         json_data = json.dumps({"message":"unkown data"})
+        print(request.POST)
         # return HttpResponse(json_data, content_type='application/json', status=400)
         return self.render_to_response(json_data, status=400)
 
