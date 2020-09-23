@@ -40,7 +40,7 @@ def do_obj_update():
 	'content':"Update from do_obj_update"
 	}
 
-	r = requests.put(BASE_URL + ENDPOINT + "3/", data=json.dumps(new_data))
+	r = requests.put(BASE_URL + ENDPOINT + "2/", data=json.dumps(new_data))
 	# print(r.json())
 	# print(r.headers)
 	print(r.status_code)

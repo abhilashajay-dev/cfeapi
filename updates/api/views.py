@@ -23,7 +23,7 @@ class UpdateModelDetailAPIView(HttpResponseMixin, CSRFExemptMixin, View):  # ret
     def get(self, request, id, *args, **kwargs):
 
         obj = self.get_obj(id=id)
-        if obj.id is None:
+        if obj  is None:
             error_data = json.dumps({'message':'Update not found'})
             return self.render_to_response(error_data, status=404)
         json_data = obj.serialize()
@@ -37,8 +37,8 @@ class UpdateModelDetailAPIView(HttpResponseMixin, CSRFExemptMixin, View):  # ret
             return self.render_to_response(error_data, status=400)
 
         obj = self.get_obj(id=id)
-        if obj.id is None:
-            error_data = json.dumps({'message':'object id not found'})
+        if obj is None:
+            error_data = json.dumps({'message':'object not found'})
             return self.render_to_response(error_data, status=404)
         # return HttpResponse(json_data, content_type='application/json')
         # print(dir(request))
@@ -58,13 +58,13 @@ class UpdateModelDetailAPIView(HttpResponseMixin, CSRFExemptMixin, View):  # ret
         if form.errors:
             data = json.dumps(form.errors)
             return self.render_to_response(data , status=400)     
-            
+
         json_data = json.dumps({'message':'Something is new'})
         return self.render_to_response(json_data)
 
     def delete(self, request, id, *args, **kwargs):
         obj = self.get_obj(id=id)
-        if obj.id is None:
+        if obj  is None:
             error_data = json.dumps({'message':'Update not found'})
             return self.render_to_response(error_data, status=404)
         # json_data = obj.serialize()
