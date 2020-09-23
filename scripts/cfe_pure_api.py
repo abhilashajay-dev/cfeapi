@@ -71,5 +71,5 @@ def do_obj_delete():
 
 # print(get_list())
 # print(create_update())
-# print(do_obj_update())
-print(do_obj_delete())	
+print(do_obj_update())
+# print(do_obj_delete())	
