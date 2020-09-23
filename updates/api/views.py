@@ -54,7 +54,9 @@ class UpdateModelDetailAPIView(HttpResponseMixin, CSRFExemptMixin, View):  # ret
             error_data = json.dumps({'message':'Update not found'})
             return self.render_to_response(error_data, status=404)
         # json_data = obj.serialize()
-        json_data=json.dumps({'message':"something"})
+        message = f"{obj} got deleted"
+        obj.delete()
+        json_data=json.dumps({'message':message})
         # return HttpResponse(json_data, content_type='application/json')
         return self.render_to_response(json_data)
 
