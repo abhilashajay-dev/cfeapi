@@ -19,9 +19,9 @@ ENDPOINT = "api/updates/"
 #     return data
 
 
-def get_list(id=None):
+def get_list():
 	new_data ={
-	'id':id,
+	'id':"",
 	}
 	if new_data['id'] == '' or new_data['id'] == "":
 		new_data['id'] = None
@@ -36,7 +36,7 @@ def get_list(id=None):
 def create_update():
 	new_data= {
 	'user':1,
-	'content':"yo loooo"
+	'content':""
 	}
 
 	r = requests.post(BASE_URL + ENDPOINT , data=json.dumps(new_data))
@@ -85,7 +85,7 @@ def do_obj_delete():
 
 
 
-print(get_list())
-# print(create_update())
+# print(get_list())
+print(create_update())
 # print(do_obj_update())
 # print(do_obj_delete())	
