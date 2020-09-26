@@ -8,20 +8,18 @@ class StatusForm(forms.ModelForm):
         fields = ['user','content', 'image']
 
 
-    def clean(self, *args, **kwargs):
-        data = self.cleaned_data
-        content = data.get("content", None)
-        if content == "":
-            content = None 
-        image = data.get("image", None)
-        if content is None and image is None:
-            raise forms.ValidationError("Content or image is required") 
-        return super().clean(*args, kwargs)          
-
-
     def clean_content(self, *args, **kwargs):
-        content = self.cleaned_data
-        print(content)
-        if len(content) >20:
-            raise forms.ValidationError("Content is Long")
-        return content    
+        content = self.cleaned_data.get('content')
+        if len(content) >240:
+            raise forms.ValidationError("Content is too long")    
+
+
+    def clean(self, *args, **kwargs):
+        data =self.cleaned_data
+        content = data.get('content', None)
+        if content == "" or content =='':
+            content=None
+        image = data.get('image', None)
+        if content is None and image is None:
+            raise forms.ValidationError("image or content is required") 
+        return super().clean(*args, **kwargs)       
