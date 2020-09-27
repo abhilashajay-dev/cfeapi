@@ -4,11 +4,12 @@ from .forms import StatusForm
 # Register your models here.
 
 class StatusAdmin(admin.ModelAdmin):
-	list_display = ['user','__str__', 'image']
+	list_display = ['user','__str__', 'image', 'content']
 	
 	form = StatusForm														
 	# class Meta:
 	# 	model =Status
 
-admin.site.register(Status, StatusAdmin)
+# admin.site.register(Status, StatusAdmin)
 
+admin.site.register(Status,)

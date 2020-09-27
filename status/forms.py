@@ -10,7 +10,7 @@ class StatusForm(forms.ModelForm):
 
     def clean_content(self, *args, **kwargs):
         content = self.cleaned_data.get('content')
-        if len(content) >240:
+        if len(content) > 240:
             raise forms.ValidationError("Content is too long")    
 
 
