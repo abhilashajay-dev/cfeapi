@@ -9,7 +9,7 @@ from .serializers import StatusSerializer
 
 class StatusListSearchAPIView(APIView):
 	permission_classes = []
-	authentication_classe = []
+	authentication_classes = []
 
 	def get(self, request, format=None):
 		qs = Status.objects.all()
@@ -19,6 +19,22 @@ class StatusListSearchAPIView(APIView):
 
 class StatusAPIView(generics.ListAPIView):
 	permission_classes = []
-	authentication_classe = []
+	authentication_classes = []
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
+
+	def get_queryset(self):
+		qs = Status.objects.all()
+		query = self.request.GET.get('q')
+		if query is not None:
+			qs = qs.filter(content__icontains=query)
+		return qs 	
+
+class StatusCreateAPIView(generics.CreateAPIView):
+	permission_classes = []
+	authentication_classes = []
+	queryset = Status.objects.all()
+	serializer_class = StatusSerializer
+
+	# def perform_create(self, serializer):
+	# 	serializer.save(user=self.request.user)
