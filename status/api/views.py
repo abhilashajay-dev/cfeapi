@@ -1,6 +1,6 @@
 # from django.views.generic import View
 from rest_framework.views import APIView
-from rest_framework import generics
+from rest_framework import generics, mixins
 from rest_framework.response import Response
 from status.models import Status
 from .serializers import StatusSerializer
@@ -17,7 +17,7 @@ class StatusListSearchAPIView(APIView):
 		return Response(serializer.data)
 
 
-class StatusAPIView(generics.ListAPIView):
+class StatusAPIView(mixins.CreateModelMixin ,generics.ListAPIView):
 	permission_classes = []
 	authentication_classes = []
 	queryset = Status.objects.all()
@@ -28,7 +28,10 @@ class StatusAPIView(generics.ListAPIView):
 		query = self.request.GET.get('q')
 		if query is not None:
 			qs = qs.filter(content__icontains=query)
-		return qs 	
+		return qs 
+	
+	def post(self, request, *args, **kwargs):
+		return self.create(request, *args, **kwargs)#---->CreateModelMixin method .create(request, *args, **kwargs)			
 
 class StatusCreateAPIView(generics.CreateAPIView):
 	permission_classes = []
@@ -39,12 +42,21 @@ class StatusCreateAPIView(generics.CreateAPIView):
 	# def perform_create(self, serializer):
 	# 	serializer.save(user=self.request.user)
 
-class StatusDetailAPIView(generics.RetrieveAPIView):
+class StatusDetailAPIView(mixins.DestroyModelMixin ,mixins.UpdateModelMixin ,generics.RetrieveAPIView):
 	permission_classes = []
 	authentication_classes = []
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
 	lookup_field = 'id' #'slug'
+
+	def put(self, request, *args, **kwargs):
+		return self.update(request, *args, **kwargs)
+
+	def delete(self, request, *args, **kwargs):
+		return self.destroy(request, *args, **kwargs)
+	
+	def patch(self, request, *args, **kwargs):
+		return self.update(request, *args, **kwargs)		
 
 	# def get_object(self, *args, **kwargs):
 	# 	kwargs = self.kwargs
