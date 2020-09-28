@@ -16,7 +16,6 @@ class StatusManger(models.Manager):
 
 # Create your models here.
 
-
 class Status(models.Model):  # similar to social media status
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	content = models.TextField(null=True, blank=True)
