@@ -8,7 +8,7 @@ from status.models import Status
 class StatusSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Status
-		fields = ["user", "content", "image"]
+		fields = ["user", "content", "image", "id"]
 
 
 	# def validate_<fieldname>(self, value):
