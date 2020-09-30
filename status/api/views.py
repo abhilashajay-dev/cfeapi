@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from status.models import Status
 from .serializers import StatusSerializer
 from django.shortcuts import get_object_or_404
-
+import json
+from .utils import is_json
 
 
 # class StatusListSearchAPIView(APIView):
@@ -28,6 +29,7 @@ class StatusAPIView(
 	authentication_classes = []
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
+	passed_id = None #-----> to avoid error 
 
 	def get_queryset(self):
 		qs = Status.objects.all()
@@ -37,7 +39,7 @@ class StatusAPIView(
 		return qs 
 
 	def  get_object(self):
-		passed_id = self.request.GET.get('id', None)
+		passed_id = self.request.GET.get('id', None) or self.passed_id
 		queryset = self.get_queryset()
 		obj = None
 		if passed_id is not None:
@@ -46,7 +48,16 @@ class StatusAPIView(
 		return obj 
 
 	def get(self, request, *args, **kwargs):
-		passed_id =  request.GET.get('id', None)
+		url_passed_id = request.GET.get('id', None)
+		json_data = {} #---> have to initialized a python dict in order to convert the request.body to python dic and extract value of id
+		body_ = request.body
+		if is_json(body_):
+			json_data = json.loads(request.body)
+		new_passed_id = json_data.get('id', None)
+		print(request.body)
+		# print(request.data)
+		passed_id = url_passed_id or new_passed_id or None
+		self.passed_id = passed_id
 		if passed_id is not None:
 			return self.retrieve(request, *args, **kwargs) #---->RetrieveModelMixin method overides get_object()
 		return super().get(request ,*args, **kwargs)	#----> overriding the inbuilt get method of ListAPIView	
@@ -60,12 +71,42 @@ class StatusAPIView(
 	# 	serializer.save(user=self.request.user)
 
 	def put(self, request, *args, **kwargs):
+		url_passed_id = request.GET.get('id', None)
+		json_data = {} #---> have to initialized a python dict in order to convert the request.body to python dic and extract value of id
+		body_ = request.body
+		if is_json(body_):
+			json_data = json.loads(request.body)
+		new_passed_id = json_data.get('id', None)
+		print(request.body)
+		# print(request.data)
+		passed_id = url_passed_id or new_passed_id or None
+		self.passed_id = passed_id
 		return self.update(request, *args, **kwargs)
 	
 	def patch(self, request, *args, **kwargs):
+		url_passed_id = request.GET.get('id', None)
+		json_data = {} #---> have to initialized a python dict in order to convert the request.body to python dic and extract value of id
+		body_ = request.body
+		if is_json(body_):
+			json_data = json.loads(request.body)
+		new_passed_id = json_data.get('id', None)
+		print(request.body)
+		# print(request.data)
+		passed_id = url_passed_id or new_passed_id or None
+		self.passed_id = passed_id
 		return self.update(request, *args, **kwargs)		
 
 	def delete(self, request, *args, **kwargs):
+		url_passed_id = request.GET.get('id', None)
+		json_data = {} #---> have to initialized a python dict in order to convert the request.body to python dic and extract value of id
+		body_ = request.body
+		if is_json(body_):
+			json_data = json.loads(request.body)
+		new_passed_id = json_data.get('id', None)
+		print(request.body)
+		# print(request.data)
+		passed_id = url_passed_id or new_passed_id or None
+		self.passed_id = passed_id    
 		return self.destroy(request, *args, **kwargs)
 
 
