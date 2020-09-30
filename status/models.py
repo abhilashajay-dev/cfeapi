@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 
 def upload_status_image(instance, filename):
-    return "updates/{user}/{filename}".format(user=instance.user, filename=filename)
+    return "status/{user}/{filename}".format(user=instance.user, filename=filename)
 
 
 class StatusQuerySet(models.QuerySet):
