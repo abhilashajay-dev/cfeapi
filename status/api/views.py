@@ -2,11 +2,73 @@
 from rest_framework.views import APIView
 from rest_framework import generics, mixins
 from rest_framework.response import Response
+from rest_framework.authentication  import SessionAuthentication 
 from status.models import Status
 from .serializers import StatusSerializer
 from django.shortcuts import get_object_or_404
 import json
 from .utils import is_json
+
+class StatusAPIView(
+	mixins.CreateModelMixin,
+	mixins.RetrieveModelMixin,
+	mixins.UpdateModelMixin,
+	mixins.DestroyModelMixin,
+ 	generics.ListAPIView): #-----> CRUD in a single endpoint
+	permission_classes = []
+	authentication_classes = [SessionAuthentication,]
+	queryset = Status.objects.all()
+	serializer_class = StatusSerializer
+	passed_id = None #-----> to avoid error 
+
+	def get_queryset(self):
+		qs = Status.objects.all()
+		print(self.request.user)
+		query = self.request.GET.get('q')
+		if query is not None:
+			qs = qs.filter(content__icontains=query)
+		return qs 
+
+	def post(self, request, *args, **kwargs):
+		return self.create(request, *args, **kwargs)#---->CreateModelMixin method .create(request, *args, **kwargs)			
+
+	def perform_create(self, serializer):
+		# serializer.save(user=self.request.user)
+		pass
+
+# 	# def get_object(self, *args, **kwargs):
+# 	# 	kwargs = self.kwargs
+# 	# 	kw_id = kwargs.get('id')
+# 	# 	return Status.objects.get(id=kw_id)
+
+class StatusDetailAPIView(
+	mixins.DestroyModelMixin, 
+	mixins.UpdateModelMixin,
+	generics.RetrieveAPIView):
+	permission_classes = []
+	authentication_classes = []
+	queryset = Status.objects.all()
+	serializer_class = StatusSerializer
+	lookup_field = 'id' #'slug'
+
+	def put(self, request, *args, **kwargs):
+		return self.update(request, *args, **kwargs)
+
+	def delete(self, request, *args, **kwargs):
+		return self.destroy(request, *args, **kwargs)
+	
+	def patch(self, request, *args, **kwargs):
+		return self.update(request, *args, **kwargs)		
+
+	def perform_update(self, serializer):
+		 # serializer.save(updated_by_user=self.request.user)
+		 pass
+
+	def perform_destroy(self, instance):
+		# if instance is not None:
+		# 	return instance.delete()
+		# return None	
+		pass
 
 
 # class StatusListSearchAPIView(APIView):
@@ -121,65 +183,6 @@ from .utils import is_json
 # 	# def perform_create(self, serializer):
 # 	# 	serializer.save(user=self.request.user)
 
-class StatusDetailAPIView(
-	mixins.DestroyModelMixin, 
-	mixins.UpdateModelMixin,
-	generics.RetrieveAPIView):
-	permission_classes = []
-	authentication_classes = []
-	queryset = Status.objects.all()
-	serializer_class = StatusSerializer
-	lookup_field = 'id' #'slug'
-
-	def put(self, request, *args, **kwargs):
-		return self.update(request, *args, **kwargs)
-
-	def delete(self, request, *args, **kwargs):
-		return self.destroy(request, *args, **kwargs)
-	
-	def patch(self, request, *args, **kwargs):
-		return self.update(request, *args, **kwargs)		
-
-	def perform_update(self, serializer):
-		 # serializer.save(updated_by_user=self.request.user)
-		 pass
-
-	def perform_destroy(self, instance):
-		# if instance is not None:
-		# 	return instance.delete()
-		# return None	
-		pass
-
-class StatusAPIView(
-	mixins.CreateModelMixin,
-	mixins.RetrieveModelMixin,
-	mixins.UpdateModelMixin,
-	mixins.DestroyModelMixin,
- 	generics.ListAPIView): #-----> CRUD in a single endpoint
-	permission_classes = []
-	authentication_classes = []
-	queryset = Status.objects.all()
-	serializer_class = StatusSerializer
-	passed_id = None #-----> to avoid error 
-
-	def get_queryset(self):
-		qs = Status.objects.all()
-		query = self.request.GET.get('q')
-		if query is not None:
-			qs = qs.filter(content__icontains=query)
-		return qs 
-
-	def post(self, request, *args, **kwargs):
-		return self.create(request, *args, **kwargs)#---->CreateModelMixin method .create(request, *args, **kwargs)			
-
-	def perform_create(self, serializer):
-		# serializer.save(user=self.request.user)
-		pass
-
-# 	# def get_object(self, *args, **kwargs):
-# 	# 	kwargs = self.kwargs
-# 	# 	kw_id = kwargs.get('id')
-# 	# 	return Status.objects.get(id=kw_id)
 
 # class StatusUpdateAPIView(generics.UpdateAPIView):
 # 	permission_classes = []

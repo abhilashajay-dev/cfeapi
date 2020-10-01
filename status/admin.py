@@ -6,10 +6,10 @@ from .forms import StatusForm
 class StatusAdmin(admin.ModelAdmin):
 	list_display = ['user','__str__', 'image', 'content']
 	
-	form = StatusForm														
-	# class Meta:
-	# 	model =Status
+	# form = StatusForm														
+	# # class Meta:
+	# # 	model =Status
 
-# admin.site.register(Status, StatusAdmin)
+admin.site.register(Status, StatusAdmin)
 
-admin.site.register(Status,)
+# admin.site.register(Status,)
