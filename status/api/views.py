@@ -33,8 +33,8 @@ class StatusAPIView(
 		return self.create(request, *args, **kwargs)#---->CreateModelMixin method .create(request, *args, **kwargs)			
 
 	def perform_create(self, serializer):
-		# serializer.save(user=self.request.user)
-		pass
+		serializer.save(user=self.request.user)
+		# pass
 
 # 	# def get_object(self, *args, **kwargs):
 # 	# 	kwargs = self.kwargs

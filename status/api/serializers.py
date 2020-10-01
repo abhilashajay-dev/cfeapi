@@ -10,6 +10,7 @@ class StatusSerializer(serializers.ModelSerializer):
 		model = Status
 		fields = ["user", "content", "image", "id"]
 
+		read_only_fields = ["user"]
 
 	# def validate_<fieldname>(self, value):
 	# 	return	
