@@ -1,6 +1,6 @@
 # from django.views.generic import View
 from rest_framework.views import APIView
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, permissions
 from rest_framework.response import Response
 from rest_framework.authentication  import SessionAuthentication 
 from status.models import Status
@@ -15,8 +15,8 @@ class StatusAPIView(
 	mixins.UpdateModelMixin,
 	mixins.DestroyModelMixin,
  	generics.ListAPIView): #-----> CRUD in a single endpoint
-	permission_classes = []
-	authentication_classes = [SessionAuthentication,]
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly,] #--->permission_classes & authentication_classes similar to login_required mixin or decorator
+	authentication_classes = [SessionAuthentication,] #JWT or Oath or JSON
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
 	passed_id = None #-----> to avoid error 
