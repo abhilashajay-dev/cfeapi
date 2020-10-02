@@ -16,7 +16,7 @@ class StatusAPIView(
 	mixins.DestroyModelMixin,
  	generics.ListAPIView): #-----> CRUD in a single endpoint
 	permission_classes = [permissions.IsAuthenticatedOrReadOnly,] #--->permission_classes & authentication_classes similar to login_required mixin or decorator
-	authentication_classes = [SessionAuthentication,] #JWT or Oath or JSON
+	# authentication_classes = [SessionAuthentication,] #JWT or Oath or JSON
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
 	passed_id = None #-----> to avoid error 
@@ -45,8 +45,8 @@ class StatusDetailAPIView(
 	mixins.DestroyModelMixin, 
 	mixins.UpdateModelMixin,
 	generics.RetrieveAPIView):
-	permission_classes = []
-	authentication_classes = []
+	# permission_classes = []
+	# authentication_classes = []
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
 	lookup_field = 'id' #'slug'

@@ -135,3 +135,5 @@ STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, "static")
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, "media")
+
+from cfeapi.restconf.main import *
