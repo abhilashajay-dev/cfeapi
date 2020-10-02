@@ -45,7 +45,7 @@ class StatusDetailAPIView(
 	mixins.DestroyModelMixin, 
 	mixins.UpdateModelMixin,
 	generics.RetrieveAPIView):
-	# permission_classes = []
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 	# authentication_classes = []
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
