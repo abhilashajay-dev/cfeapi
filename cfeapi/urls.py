@@ -31,5 +31,6 @@ urlpatterns = [
     path('json/slv/', SerializedListView.as_view()),
     path('api/updates/', include('updates.api.urls')),
     path('api/status/', include('status.api.urls')),
+    path('api/auth/', include('accounts.api.urls')),
 ]
 
