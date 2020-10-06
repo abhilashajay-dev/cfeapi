@@ -23,11 +23,11 @@ post_headers = {"content-type":"application/json"}
 # token authentication
 
 auth_data = {
-	"username":'admin',
+	"username":'admin@gmail.com',
 	"password":'admin',
 }
 
 
 r3  = requests.post(AUTHENDPOINT, data=json.dumps(auth_data), headers=post_headers)
-token   =  r3.json()["token"] 
+token   =  r3.json() 
 print(token)
