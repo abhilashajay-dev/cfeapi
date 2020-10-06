@@ -9,7 +9,7 @@ class AuthView(APIView):
 	permission_classes = [permissions.AllowAny]
 	def post(self, request, *args, **kwargs):
 		print(request.user)
-		if request.user.is_authenticated():
+		if request.user.is_authenticated:
 			return Response({"detail":"You are already authenticated"}, status=400)
 		data = request.data
 		username = data.get('username')
