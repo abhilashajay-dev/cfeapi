@@ -14,21 +14,22 @@ get_endpoint = ENDPOINT + str(48)
 post_data = json.dumps({"content":"Some random content"})
 
 # get request test
-r = requests.get(get_endpoint)
+# r = requests.get(get_endpoint)
 
-print(r.text)
-print(r.status_code)
+# print(r.text)
+# print(r.status_code)
 
 post_headers = {"content-type":"application/json"}
 
 # token authentication
 
 auth_data = {
-	"username":'admin@gmail.com',
+	"username":'admin2',
 	"password":'admin',
+	"password2":'admin',
 }
 
 
-r3  = requests.post(AUTHENDPOINT, data=json.dumps(auth_data), headers=post_headers)
+r3  = requests.post(REGISTERENDPOINT, data=json.dumps(auth_data), headers=post_headers)
 token   =  r3.json() 
 print(token)
