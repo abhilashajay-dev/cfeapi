@@ -42,10 +42,14 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 		return timezone.now() + expire_delta - datetime.timedelta(seconds=300)
 
 	def get_token_response(self, obj):
+		context = self.context
+		request = context["request"]
+		# print(request.user.is_authenticated)
 		user = obj
 		payload = jwt_payload_handler(user)
 		token = jwt_encode_handler(payload)
-		response = jwt_response_payload_handler(token, user, request=None)
+		# print(request.user.is_authenticated)
+		response = jwt_response_payload_handler(token, user, request=context["request"])
 		return response 
 
 	def validate_email(self, value):

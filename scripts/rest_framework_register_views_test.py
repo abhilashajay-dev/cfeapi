@@ -24,8 +24,8 @@ post_headers = {"content-type":"application/json"}
 # token authentication
 
 auth_data = {
-	"username":'admin11',
-	"email":"admin11@gmail.com",
+	"username":'admin15',
+	"email":"admin15@gmail.com",
 	"password":'admin',
 	"password2":'admin',
 }
