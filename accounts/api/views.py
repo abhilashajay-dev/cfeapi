@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework_jwt.settings import api_settings
 from .serializers import UserRegisterSerializer
+
 # from .utils import jwt_response_payload_handler
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
