@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework_jwt.settings import api_settings
 from .serializers import UserRegisterSerializer
+from .permissions import AnonPermissionOnly
 
 # from .utils import jwt_response_payload_handler
 
@@ -16,9 +17,9 @@ User = get_user_model()
 
 class AuthView(APIView):
 	authentication_classes = []
-	permission_classes = [permissions.AllowAny]
+	permission_classes = [AnonPermissionOnly]
 	def post(self, request, *args, **kwargs):
-		print(request.user)
+		# print(request.user)
 		if request.user.is_authenticated:
 			return Response({"detail":"You are already authenticated"}, status=400)
 		data = request.data
@@ -70,7 +71,7 @@ class AuthView(APIView):
 class RegisterAPIView(generics.CreateAPIView): #--->using serializer 
 	queryset = User.objects.all()
 	serializer_class = UserRegisterSerializer
-	permission_classes = [permissions.AllowAny]
+	permission_classes = [AnonPermissionOnly]
 
 	def get_serializer_context(self, *args, **kwargs):
 		return {"request":self.request}

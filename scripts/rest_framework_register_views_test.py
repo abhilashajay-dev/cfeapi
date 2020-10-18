@@ -19,13 +19,15 @@ post_data = json.dumps({"content":"Some random content"})
 # print(r.text)
 # print(r.status_code)
 
-post_headers = {"content-type":"application/json"}
+post_headers = {"content-type":"application/json",
+# "Authorization":"JWT " + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyNSwidXNlcm5hbWUiOiJhZG1pbjEiLCJleHAiOjE2MDI5Nzc0NjQsImVtYWlsIjoiYWRtaW4xQGdtYWlsLmNvbSIsIm9yaWdfaWF0IjoxNjAyOTc3MTY0fQ.JzM_KgMG52-JTlKMsc9MqpY-ExDGc8GtiXjvB1hPhGc'
+}
 
 # token authentication
 
 auth_data = {
-	"username":'admin15',
-	"email":"admin15@gmail.com",
+	"username":'admin16',
+	"email":"admin16@gmail.com",
 	"password":'admin',
 	"password2":'admin',
 }

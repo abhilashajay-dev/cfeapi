@@ -8,6 +8,7 @@ from .serializers import StatusSerializer
 from django.shortcuts import get_object_or_404
 import json
 from .utils import is_json
+from accounts.api.permissions import IsOwnerOrReadOnly
 
 class StatusAPIView(
 	mixins.CreateModelMixin,
@@ -45,7 +46,7 @@ class StatusDetailAPIView(
 	mixins.DestroyModelMixin, 
 	mixins.UpdateModelMixin,
 	generics.RetrieveAPIView):
-	permission_classes = [permissions.IsAuthenticatedOrReadOnly,]
+	permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 	# authentication_classes = []
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
