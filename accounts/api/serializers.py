@@ -12,6 +12,15 @@ expire_delta = api_settings.JWT_REFRESH_EXPIRATION_DELTA
 
 User = get_user_model()
 
+
+class UserPublicSerilaizers(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields = [
+		"id",
+		"username",
+		]
+
 class UserRegisterSerializer(serializers.ModelSerializer):
 	password2 = serializers.CharField(write_only=True)
 	# password = serializers.CharField(write_only=True)

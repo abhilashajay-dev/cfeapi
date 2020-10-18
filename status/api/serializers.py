@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from status.models import Status
-
+from accounts.api.serializers import UserPublicSerilaizers
 
 
 
 # Serializers can turn data into JSON and also Validate data similar to forms
 class StatusSerializer(serializers.ModelSerializer):
+	user  = UserPublicSerilaizers(read_only=True)
 	class Meta:
 		model = Status
 		fields = ["user", "content", "image", "id"]
