@@ -7,11 +7,15 @@ from accounts.api.serializers import UserPublicSerilaizers
 # Serializers can turn data into JSON and also Validate data similar to forms
 class StatusSerializer(serializers.ModelSerializer):
 	user  = UserPublicSerilaizers(read_only=True)
+	uri = serializers.SerializerMethodField(read_only=True)
 	class Meta:
 		model = Status
-		fields = ["user", "content", "image", "id"]
+		fields = ["user", "content", "image", "id", "uri"]
 
 		read_only_fields = ["user"]
+
+	def get_uri(self, obj):
+		return "/api/status/{id}".format(id=obj.id)	
 
 	# def validate_<fieldname>(self, value):
 	# 	return	
