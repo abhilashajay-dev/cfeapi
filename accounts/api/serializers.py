@@ -13,6 +13,24 @@ expire_delta = api_settings.JWT_REFRESH_EXPIRATION_DELTA
 User = get_user_model()
 
 
+# class UserDetailSerilaizers(serializers.ModelSerializer):
+# 	uri = serializers.SerializerMethodField(read_only=True)
+# 	status_list = serializers.SerializerMethodField(read_only=True)
+# 	class Meta:
+# 		model = User
+# 		fields = [
+# 		"id",
+# 		"username",
+# 		"uri",
+# 		"status_list",
+# 		]
+# 	def get_uri(self, obj):
+# 		return "/api/users/{id}/".format(id=obj.id)
+	
+# 	def get_status_list(self, obj):
+		
+		
+
 class UserPublicSerilaizers(serializers.ModelSerializer):
 	uri = serializers.SerializerMethodField(read_only=True)
 	class Meta:

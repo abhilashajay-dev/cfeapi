@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework_jwt.settings import api_settings
 from .serializers import UserRegisterSerializer
+from .user.serializers import UserDetailSerilaizer
 from .permissions import AnonPermissionOnly
 
 # from .utils import jwt_response_payload_handler
@@ -14,6 +15,12 @@ jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
 
 User = get_user_model()
+
+
+class UserDetailAPIView(generics.RetrieveAPIView):
+	serializer_class = UserDetailSerilaizer
+	queryset = User.objects.filter(is_active=True)
+	lookup_field = "username" #instead of id
 
 class AuthView(APIView):
 	authentication_classes = []
