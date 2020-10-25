@@ -1,5 +1,5 @@
 from django.db.models import Q
-from rest_framework import permissions, generics
+from rest_framework import permissions, generics, pagination
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, get_user_model
@@ -25,9 +25,15 @@ class UserDetailAPIView(generics.RetrieveAPIView):
 	queryset = User.objects.filter(is_active=True)
 	lookup_field = "username" #instead of id
 
+	def get_serializer_context(self, *args, **kwargs):
+		return {"request":self.request}
+
+class CustomPagination(pagination.PageNumberPagination):
+	page_size = 5 
 
 class UserStatusAPIView(generics.ListAPIView):
 	serializer_class = StatusInlineUserSerializer
+	pagination_class = CustomPagination
 
 	def get_queryset(self, *args, **kwargs):
 		username = self.kwargs.get("username", None)

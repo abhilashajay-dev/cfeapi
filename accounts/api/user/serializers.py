@@ -41,7 +41,15 @@ class UserDetailSerilaizer(serializers.ModelSerializer):
 		return data	
 	
 	def get_recent_status_list(self, obj):
-		qs = obj.status_set.all().order_by("-timestamp")[:5]# Status.objects.all(user=object)
+		request = self.context.get('request')
+		limit = 5
+		if request:
+			limit_query = request.GET.get("limit")
+			try:
+				limit = int(limit_query)
+			except:
+				pass	
+		qs = obj.status_set.all().order_by("-timestamp")[:limit]# Status.objects.all(user=object)
 		return StatusInlineUserSerializer(qs, many=True).data
 
 	def get_last_status(self, obj):
