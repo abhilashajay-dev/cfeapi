@@ -28,12 +28,12 @@ class UserDetailAPIView(generics.RetrieveAPIView):
 	def get_serializer_context(self, *args, **kwargs):
 		return {"request":self.request}
 
-class CustomPagination(pagination.PageNumberPagination):
-	page_size = 5 
+# class CustomPagination(pagination.PageNumberPagination):
+# 	page_size = 5 
 
 class UserStatusAPIView(generics.ListAPIView):
 	serializer_class = StatusInlineUserSerializer
-	pagination_class = CustomPagination
+	# pagination_class = CustomPagination
 
 	def get_queryset(self, *args, **kwargs):
 		username = self.kwargs.get("username", None)
