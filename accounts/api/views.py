@@ -17,10 +17,10 @@ jwt_response_payload_handler = api_settings.JWT_RESPONSE_PAYLOAD_HANDLER
 User = get_user_model()
 
 
-class UserDetailAPIView(generics.RetrieveAPIView):
-	serializer_class = UserDetailSerilaizer
-	queryset = User.objects.filter(is_active=True)
-	lookup_field = "username" #instead of id
+# class UserDetailAPIView(generics.RetrieveAPIView):
+# 	serializer_class = UserDetailSerilaizer
+# 	queryset = User.objects.filter(is_active=True)
+# 	lookup_field = "username" #instead of id
 
 class AuthView(APIView):
 	authentication_classes = []
