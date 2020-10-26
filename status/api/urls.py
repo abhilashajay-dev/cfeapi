@@ -7,6 +7,7 @@ StatusDetailAPIView,
 # StatusUpdateAPIView,
 # StatusDeleteAPIView,
 )
+app_name="status"
 
 urlpatterns = [
 	path('',StatusAPIView.as_view()),

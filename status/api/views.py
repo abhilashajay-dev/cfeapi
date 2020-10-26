@@ -21,7 +21,8 @@ class StatusAPIView(
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
 	passed_id = None #-----> to avoid error
-	search_fields = ("user__username","content") 
+	search_fields = ("user__username","content", "user__email") 
+	ordering_fields = ("user__username", "timestamp",)
 
 	def get_queryset(self):
 		qs = Status.objects.all()

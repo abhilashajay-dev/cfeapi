@@ -33,6 +33,8 @@ class UserDetailAPIView(generics.RetrieveAPIView):
 
 class UserStatusAPIView(generics.ListAPIView):
 	serializer_class = StatusInlineUserSerializer
+	search_fields = ("user__username","content", "user__email")
+	ordering_fields = ("user__username", "timestamp",)
 	# pagination_class = CustomPagination
 
 	def get_queryset(self, *args, **kwargs):

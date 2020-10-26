@@ -30,7 +30,7 @@ urlpatterns = [
     path('json/sdv/', SerializedDetailView.as_view()),
     path('json/slv/', SerializedListView.as_view()),
     path('api/updates/', include('updates.api.urls')),
-    path('api/status/', include('status.api.urls')),
+    path('api/status/', include('status.api.urls', namespace="api-status")),
     path('api/auth/', include('accounts.api.urls')),
     # path('api/user/', include('accounts.api.urls_user', namespace="api-user")),
     path('api/user/', include('accounts.api.user.urls', namespace="api-user")),
