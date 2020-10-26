@@ -20,7 +20,8 @@ class StatusAPIView(
 	# authentication_classes = [SessionAuthentication,] #JWT or Oath or JSON
 	queryset = Status.objects.all()
 	serializer_class = StatusSerializer
-	passed_id = None #-----> to avoid error 
+	passed_id = None #-----> to avoid error
+	search_fields = ("user__username","content") 
 
 	def get_queryset(self):
 		qs = Status.objects.all()
