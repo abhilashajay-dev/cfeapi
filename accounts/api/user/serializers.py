@@ -55,8 +55,9 @@ class UserDetailSerilaizer(serializers.ModelSerializer):
 			except:
 				pass	
 		qs = obj.status_set.all().order_by("-timestamp")[:limit]# Status.objects.all(user=object)
-		return StatusInlineUserSerializer(qs, many=True).data
+		return StatusInlineUserSerializer(qs, many=True, context={"request":request}).data
 
 	def get_last_status(self, obj):
+		request = self.context.get('request')
 		qs = obj.status_set.all().order_by("-timestamp")# Status.objects.all(user=object)
-		return StatusInlineUserSerializer(qs.first()).data	
+		return StatusInlineUserSerializer(qs.first(), context={"request":request}).data	

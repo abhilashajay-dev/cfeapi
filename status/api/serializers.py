@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from status.models import Status
 from accounts.api.serializers import UserPublicSerilaizers
+from rest_framework.reverse import reverse as api_reverse
 
 class StatusInlineUserSerializer(serializers.ModelSerializer):
 	uri = serializers.SerializerMethodField(read_only=True)
@@ -8,8 +9,13 @@ class StatusInlineUserSerializer(serializers.ModelSerializer):
 		model = Status
 		fields = ["content", "image", "id", "uri"]
 
+	# def get_uri(self, obj):
+	# 	return "/api/status/{id}".format(id=obj.id)	
+
 	def get_uri(self, obj):
-		return "/api/status/{id}".format(id=obj.id)	
+		request = self.context.get('request')
+		return api_reverse("api-status:detail", kwargs={"id":obj.id}, request=request)
+	
 
 
 
@@ -25,7 +31,12 @@ class StatusSerializer(serializers.ModelSerializer):
 		read_only_fields = ["user"]
 
 	def get_uri(self, obj):
-		return "/api/status/{id}".format(id=obj.id)	
+		request = self.context.get('request')
+		return api_reverse("api-status:detail", kwargs={"id":obj.id}, request=request)
+		
+
+	# def get_uri(self, obj):
+	# 	return "/api/status/{id}".format(id=obj.id)	
 
 	# def validate_<fieldname>(self, value):
 	# 	return	

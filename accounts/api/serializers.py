@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework_jwt.settings import api_settings
 from django.utils import timezone
 import datetime
+from rest_framework.reverse import reverse as api_reverse	
 # from .utils import jwt_response_payload_handler
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -40,8 +41,12 @@ class UserPublicSerilaizers(serializers.ModelSerializer):
 		"username",
 		"uri",
 		]
+	# def get_uri(self, obj):
+	# 	return "/api/users/{id}/".format(id=obj.id)	
 	def get_uri(self, obj):
-		return "/api/users/{id}/".format(id=obj.id)	
+		request = self.context.get('request')
+		return api_reverse("api-user:detail", kwargs={"username":obj.username}, request=request)	
+
 
 class UserRegisterSerializer(serializers.ModelSerializer):
 	password2 = serializers.CharField(write_only=True)
